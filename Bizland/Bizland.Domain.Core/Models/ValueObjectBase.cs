@@ -1,0 +1,33 @@
+﻿using Bizland.Utilities.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Bizland.Domain.Core
+{
+    /// <summary>
+    /// Source: https://github.com/VaughnVernon/IDDD_Samples_NET
+    /// </summary>
+    public abstract class ValueObjectBase
+    {
+        protected abstract IEnumerable<object> GetEqualityComponents();
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (GetType() != obj.GetType())
+                return false;
+            var vo = obj as ValueObjectBase;
+            return GetEqualityComponents().SequenceEqual(vo.GetEqualityComponents());
+        }
+
+        public override int GetHashCode()
+        {
+            return GetEqualityComponents().CombineHashCodes();
+        }
+    }
+}

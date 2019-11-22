@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bizland.Domain.Core\Bizland.Domain.Core.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure\Bizland.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
