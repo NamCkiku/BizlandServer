@@ -1,11 +1,10 @@
 ﻿using Bizland.Infrastructure.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Bizland.Infrastructure.Infrastructure.EFCore
+using Microsoft.EntityFrameworkCore;
+
+using System.Linq;
+
+namespace Bizland.Infrastructure.EF
 {
     public class QueryRepository<TEntity, TKey> : QueryRepository<DbContext, TEntity, TKey>
        where TEntity : class

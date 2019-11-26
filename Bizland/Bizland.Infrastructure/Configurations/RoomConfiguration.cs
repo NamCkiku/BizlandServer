@@ -1,9 +1,7 @@
 ﻿using Bizland.Domain.Entities.Entities;
 using Bizland.Infrastructure.Extensions;
+
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bizland.Infrastructure.Configurations
 {

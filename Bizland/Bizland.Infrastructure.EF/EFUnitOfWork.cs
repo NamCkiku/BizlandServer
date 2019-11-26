@@ -1,14 +1,13 @@
 ﻿using Bizland.Domain.Core;
 using Bizland.Infrastructure.Interfaces;
+
 using Microsoft.EntityFrameworkCore;
-using System;
+
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Bizland.Infrastructure.Infrastructure.EFCore
+namespace Bizland.Infrastructure.EF
 {
     public interface IEfUnitOfWork : IUnitOfWork { }
 

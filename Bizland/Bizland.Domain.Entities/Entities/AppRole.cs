@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Bizland.Domain.Entities
 {
@@ -12,8 +11,8 @@ namespace Bizland.Domain.Entities
     {
         public AppRole() : base()
         {
-
         }
+
         public AppRole(string name, string description) : base(name)
         {
             this.Description = description;

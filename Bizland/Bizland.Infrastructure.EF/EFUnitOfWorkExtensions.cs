@@ -1,12 +1,11 @@
 ﻿using Bizland.Infrastructure.Interfaces;
+
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Bizland.Infrastructure.Infrastructure.EFCore
+namespace Bizland.Infrastructure.EF
 {
     public static class EfUnitOfWorkExtensions
     {

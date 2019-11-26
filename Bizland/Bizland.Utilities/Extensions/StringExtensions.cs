@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Bizland.Utilities.Extensions
@@ -74,6 +73,6 @@ namespace Bizland.Utilities.Extensions
             return false;
         }
 
-        #endregion
+        #endregion MySQLEscape Helpers
     }
 }

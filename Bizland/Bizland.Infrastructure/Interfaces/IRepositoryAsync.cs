@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Bizland.Infrastructure
 {
     public interface IRepositoryAsync<TEntity, in TKey> where TEntity : class
     {
         Task<TEntity> AddAsync(TEntity entity);
+
         Task<TEntity> UpdateAsync(TEntity entity);
+
         Task<int> DeleteAsync(TEntity entity);
     }
 }

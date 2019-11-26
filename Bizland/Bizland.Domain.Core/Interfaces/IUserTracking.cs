@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bizland.Domain.Core
+﻿namespace Bizland.Domain.Core
 {
-   public interface IUserTracking
+    public interface IUserTracking
     {
         string CreatedBy { set; get; }
 

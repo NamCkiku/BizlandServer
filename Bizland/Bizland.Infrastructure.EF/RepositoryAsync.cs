@@ -1,11 +1,11 @@
 ﻿using Bizland.Domain.Core;
+
 using Microsoft.EntityFrameworkCore;
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Bizland.Infrastructure.Infrastructure
+namespace Bizland.Infrastructure.EF
 {
     public class RepositoryAsync<TDbContext, TEntity, TKey> : IRepositoryAsync<TEntity, TKey>, IDisposable
         where TDbContext : DbContext
@@ -43,6 +43,5 @@ namespace Bizland.Infrastructure.Infrastructure
         {
             _dbContext?.Dispose();
         }
-
     }
 }

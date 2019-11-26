@@ -1,5 +1,6 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
+
+using System;
 
 namespace Bizland.Domain.Core
 {

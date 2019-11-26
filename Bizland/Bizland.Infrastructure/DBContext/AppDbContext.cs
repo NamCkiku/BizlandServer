@@ -4,17 +4,16 @@ using Bizland.Domain.Entities.Entities;
 using Bizland.Infrastructure.Configurations;
 using Bizland.Infrastructure.Extensions;
 using Bizland.Infrastructure.Helper;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Bizland.Infrastructure.DBContext
 {
@@ -23,6 +22,7 @@ namespace Bizland.Infrastructure.DBContext
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
+
         public DbSet<Room> Rooms { set; get; }
 
         public DbSet<RoomCategory> RoomCategories { set; get; }

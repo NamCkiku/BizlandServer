@@ -1,8 +1,5 @@
 ﻿using Bizland.Domain.Core;
 using Bizland.Infrastructure.DBContext;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bizland.Infrastructure.Repository.EventSourcing
 {

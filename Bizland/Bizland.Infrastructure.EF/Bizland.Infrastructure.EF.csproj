@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bizland.Domain.Entities\Bizland.Domain.Entities.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure\Bizland.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

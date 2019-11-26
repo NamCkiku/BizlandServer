@@ -1,9 +1,8 @@
 ﻿using Bizland.Domain.Core;
+
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Bizland.Domain.Entities.Entities
 {
@@ -41,7 +40,6 @@ namespace Bizland.Domain.Entities.Entities
         /// </summary>
         public int? DistrictID { get; set; }
 
-
         /// <summary>
         /// địa chỉ tỉnh thành phố
         /// </summary>
@@ -63,7 +61,6 @@ namespace Bizland.Domain.Entities.Entities
         /// </summary>
         public int? PaymentID { get; set; }
 
-
         /// <summary>
         /// Anh phong
         /// </summary>
@@ -71,13 +68,11 @@ namespace Bizland.Domain.Entities.Entities
         [MaxLength(256)]
         public string ThumbnailImage { set; get; }
 
-
         /// <summary>
         /// Nhiều ảnh
         /// </summary>
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
-
 
         /// <summary>
         /// diện tích
@@ -98,7 +93,6 @@ namespace Bizland.Domain.Entities.Entities
         [StringLength(20)]
         public string Phone { get; set; }
 
-
         /// <summary>
         /// địa chỉ của phòng
         /// </summary>
@@ -111,6 +105,7 @@ namespace Bizland.Domain.Entities.Entities
         /// </summary>
         [Required]
         public Guid UserID { get; set; }
+
         /// <summary>
         /// mô tả ngắn của phòng
         /// </summary>
@@ -128,6 +123,7 @@ namespace Bizland.Domain.Entities.Entities
         ///vị trí Lat
         /// </summary>
         public double? Lat { get; set; }
+
         /// <summary>
         /// vị trí lng
         /// </summary>
@@ -137,6 +133,7 @@ namespace Bizland.Domain.Entities.Entities
         /// số lượt xem
         /// </summary>
         public int? ViewCount { set; get; }
+
         /// <summary>
         /// số sao của phòng
         /// </summary>
@@ -181,6 +178,7 @@ namespace Bizland.Domain.Entities.Entities
         public string SeoKeywords { get; set; }
 
         public string SeoDescription { get; set; }
+
         /// <summary>
         /// sắp xếp
         /// </summary>

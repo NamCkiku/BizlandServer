@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Shared", "5 - Shared", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - UnitTest", "6 - UnitTest", "{34F716BE-AA50-488E-8E04-BFB02B9FAB1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Domain.Entities", "Bizland.Domain.Entities\Bizland.Domain.Entities.csproj", "{9200FB60-B543-4F3F-8B89-87A5F269A71E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Domain.Entities", "Bizland.Domain.Entities\Bizland.Domain.Entities.csproj", "{9200FB60-B543-4F3F-8B89-87A5F269A71E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Domain.Core", "Bizland.Domain.Core\Bizland.Domain.Core.csproj", "{0A1C2028-B8C0-4B46-9D82-A8E52B316235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Domain.Core", "Bizland.Domain.Core\Bizland.Domain.Core.csproj", "{0A1C2028-B8C0-4B46-9D82-A8E52B316235}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", "{A7CFA985-D2B9-4F57-9D4B-80DAB990A898}"
 EndProject
@@ -29,21 +29,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.1 - Utils", "5.1 - Utils"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2 - Common", "5.2 - Common", "{D1BD6948-5ACB-4090-997C-9E48D589634E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Application.Services", "Bizland.Application.Services\Bizland.Application.Services.csproj", "{D02652EB-B778-4735-8B2C-795E75D6B281}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Application.Services", "Bizland.Application.Services\Bizland.Application.Services.csproj", "{D02652EB-B778-4735-8B2C-795E75D6B281}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Infrastructure", "Bizland.Infrastructure\Bizland.Infrastructure.csproj", "{A713E1FB-04A4-4BC8-BAA9-385AA6881C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Infrastructure", "Bizland.Infrastructure\Bizland.Infrastructure.csproj", "{A713E1FB-04A4-4BC8-BAA9-385AA6881C29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Infrastructure.Repository", "Bizland.Infrastructure.Repository\Bizland.Infrastructure.Repository.csproj", "{80ADA30D-8611-44FB-B68D-61CD85AE82CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Infrastructure.Repository", "Bizland.Infrastructure.Repository\Bizland.Infrastructure.Repository.csproj", "{80ADA30D-8611-44FB-B68D-61CD85AE82CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Infrastructure.CrossCutting.IoC", "Bizland.Infrastructure.CrossCutting.IoC\Bizland.Infrastructure.CrossCutting.IoC.csproj", "{6444D242-D19E-4595-B407-A72E5D402986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Infrastructure.CrossCutting.IoC", "Bizland.Infrastructure.CrossCutting.IoC\Bizland.Infrastructure.CrossCutting.IoC.csproj", "{6444D242-D19E-4595-B407-A72E5D402986}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Infrastructure.CrossCutting.Bus", "Bizland.Infrastructure.CrossCutting.Bus\Bizland.Infrastructure.CrossCutting.Bus.csproj", "{1ECC1243-7160-41D3-B93D-208DC37104EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Infrastructure.CrossCutting.Bus", "Bizland.Infrastructure.CrossCutting.Bus\Bizland.Infrastructure.CrossCutting.Bus.csproj", "{1ECC1243-7160-41D3-B93D-208DC37104EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Utilities", "Bizland.Utilities\Bizland.Utilities.csproj", "{5FEFADEB-C923-4502-8B26-4F8523EB815D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Utilities", "Bizland.Utilities\Bizland.Utilities.csproj", "{5FEFADEB-C923-4502-8B26-4F8523EB815D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Common", "Bizland.Common\Bizland.Common.csproj", "{A655111B-1596-4AC6-9A81-835D3763E409}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Common", "Bizland.Common\Bizland.Common.csproj", "{A655111B-1596-4AC6-9A81-835D3763E409}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Room.Api", "Bizland.Room.Api\Bizland.Room.Api.csproj", "{5A2B2A4D-3EDD-4714-8473-DA29A8AC9691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bizland.Room.Api", "Bizland.Room.Api\Bizland.Room.Api.csproj", "{5A2B2A4D-3EDD-4714-8473-DA29A8AC9691}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Infrastructure.EF", "Bizland.Infrastructure.EF\Bizland.Infrastructure.EF.csproj", "{B2CBF5F9-05CE-4FD1-91AD-57DF20B04CE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizland.Infrastructure.Dapper", "Bizland.Infrastructure.Dapper\Bizland.Infrastructure.Dapper.csproj", "{64E065FE-6D0D-4102-ADB5-ACF0124FBC77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +95,14 @@ Global
 		{5A2B2A4D-3EDD-4714-8473-DA29A8AC9691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A2B2A4D-3EDD-4714-8473-DA29A8AC9691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A2B2A4D-3EDD-4714-8473-DA29A8AC9691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CBF5F9-05CE-4FD1-91AD-57DF20B04CE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CBF5F9-05CE-4FD1-91AD-57DF20B04CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CBF5F9-05CE-4FD1-91AD-57DF20B04CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CBF5F9-05CE-4FD1-91AD-57DF20B04CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E065FE-6D0D-4102-ADB5-ACF0124FBC77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E065FE-6D0D-4102-ADB5-ACF0124FBC77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E065FE-6D0D-4102-ADB5-ACF0124FBC77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E065FE-6D0D-4102-ADB5-ACF0124FBC77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +123,8 @@ Global
 		{5FEFADEB-C923-4502-8B26-4F8523EB815D} = {36B2D48C-E914-4C65-BCA3-D9DC2AABF5C7}
 		{A655111B-1596-4AC6-9A81-835D3763E409} = {D1BD6948-5ACB-4090-997C-9E48D589634E}
 		{5A2B2A4D-3EDD-4714-8473-DA29A8AC9691} = {C09696E0-B1FC-48EC-AF43-12CEDBD13A18}
+		{B2CBF5F9-05CE-4FD1-91AD-57DF20B04CE3} = {A7CFA985-D2B9-4F57-9D4B-80DAB990A898}
+		{64E065FE-6D0D-4102-ADB5-ACF0124FBC77} = {A7CFA985-D2B9-4F57-9D4B-80DAB990A898}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E148BC26-0228-4EAC-BAFB-C353E23F939A}
