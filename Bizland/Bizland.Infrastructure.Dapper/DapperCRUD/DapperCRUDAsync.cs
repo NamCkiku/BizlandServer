@@ -428,7 +428,6 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
             return connection.ExecuteAsync(sb.ToString(), dynParms, transaction, commandTimeout);
         }
 
-
         /// <summary>
         /// <para>Deletes a list of records in the database</para>
         /// <para>By default deletes records in the table matching the class name</para>
@@ -446,7 +445,6 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         /// <returns>The number of records affected</returns>
         public static Task<int> DeleteListAsync<T>(this IDbConnection connection, object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-
             var currenttype = typeof(T);
             var name = GetTableName(currenttype);
 
@@ -504,7 +502,7 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         /// <para>By default queries the table matching the class name</para>
         /// <para>-Table name can be overridden by adding an attribute on your class [Table("YourTableName")]</para>
         /// <para>conditions is an SQL where clause ex: "where name='bob'" or "where age>=@Age" - not required </para>
-        /// <para>parameters is an anonymous type to pass in named parameter values: new { Age = 15 }</para>   
+        /// <para>parameters is an anonymous type to pass in named parameter values: new { Age = 15 }</para>
         /// <para>Supports transaction and command timeout</para>
         /// /// </summary>
         /// <typeparam name="T"></typeparam>

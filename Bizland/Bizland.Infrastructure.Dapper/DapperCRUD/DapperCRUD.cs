@@ -18,7 +18,6 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
     /// </summary>
     public static partial class DapperCRUD
     {
-
         static DapperCRUD()
         {
             SetDialect(_dialect);
@@ -69,7 +68,7 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         }
 
         /// <summary>
-        /// Sets the database dialect 
+        /// Sets the database dialect
         /// </summary>
         /// <param name="dialect"></param>
         public static void SetDialect(Dialect dialect)
@@ -82,18 +81,21 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
                     _getIdentitySql = string.Format("SELECT LASTVAL() AS id");
                     _getPagedListSql = "Select {SelectColumns} from {TableName} {WhereClause} Order By {OrderBy} LIMIT {RowsPerPage} OFFSET (({PageNumber}-1) * {RowsPerPage})";
                     break;
+
                 case Dialect.SQLite:
                     _dialect = Dialect.SQLite;
                     _encapsulation = "\"{0}\"";
                     _getIdentitySql = string.Format("SELECT LAST_INSERT_ROWID() AS id");
                     _getPagedListSql = "Select {SelectColumns} from {TableName} {WhereClause} Order By {OrderBy} LIMIT {RowsPerPage} OFFSET (({PageNumber}-1) * {RowsPerPage})";
                     break;
+
                 case Dialect.MySQL:
                     _dialect = Dialect.MySQL;
                     _encapsulation = "`{0}`";
                     _getIdentitySql = string.Format("SELECT LAST_INSERT_ID() AS id");
                     _getPagedListSql = "Select {SelectColumns} from {TableName} {WhereClause} Order By {OrderBy} LIMIT {Offset},{RowsPerPage}";
                     break;
+
                 default:
                     _dialect = Dialect.SQLServer;
                     _encapsulation = "[{0}]";
@@ -465,7 +467,6 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
             var masterSb = new StringBuilder();
             StringBuilderCache(masterSb, $"{typeof(T).FullName}_Delete", sb =>
             {
-
                 var idProps = GetIdProperties(entityToDelete).ToList();
 
                 if (!idProps.Any())
@@ -502,7 +503,6 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             var currenttype = typeof(T);
             var idProps = GetIdProperties(currenttype).ToList();
-
 
             if (!idProps.Any())
                 throw new ArgumentException("Delete<T> only supports an entity with a [Key] or Id property");
@@ -760,7 +760,6 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             StringBuilderCache(masterSb, $"{typeof(T).FullName}_BuildInsertValues", sb =>
             {
-
                 var props = GetScaffoldableProperties<T>().ToArray();
                 for (var i = 0; i < props.Count(); i++)
                 {
@@ -840,12 +839,11 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
 
             props = props.Where(p => p.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(EditableAttribute).Name && !IsEditable(p)) == false);
 
-
             return props.Where(p => p.PropertyType.IsSimpleType() || IsEditable(p));
         }
 
         //Determine if the Attribute has an AllowEdit key and return its boolean state
-        //fake the funk and try to mimic EditableAttribute in System.ComponentModel.DataAnnotations 
+        //fake the funk and try to mimic EditableAttribute in System.ComponentModel.DataAnnotations
         //This allows use of the DataAnnotations property in the model and have the SimpleCRUD engine just figure it out without a reference
         private static bool IsEditable(PropertyInfo pi)
         {
@@ -861,9 +859,8 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
             return false;
         }
 
-
         //Determine if the Attribute has an IsReadOnly key and return its boolean state
-        //fake the funk and try to mimic ReadOnlyAttribute in System.ComponentModel 
+        //fake the funk and try to mimic ReadOnlyAttribute in System.ComponentModel
         //This allows use of the DataAnnotations property in the model and have the SimpleCRUD engine just figure it out without a reference
         private static bool IsReadOnly(PropertyInfo pi)
         {
@@ -963,6 +960,7 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             return string.Format(_encapsulation, databaseword);
         }
+
         /// <summary>
         /// Generates a GUID based on the current date/time
         /// http://stackoverflow.com/questions/1752004/sequential-guid-generator-c-sharp
@@ -1064,10 +1062,12 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             Name = tableName;
         }
+
         /// <summary>
         /// Name of the table
         /// </summary>
         public string Name { get; private set; }
+
         /// <summary>
         /// Name of the schema
         /// </summary>
@@ -1089,6 +1089,7 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             Name = columnName;
         }
+
         /// <summary>
         /// Name of the column
         /// </summary>
@@ -1137,6 +1138,7 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             AllowEdit = iseditable;
         }
+
         /// <summary>
         /// Does this property persist to the database?
         /// </summary>
@@ -1158,6 +1160,7 @@ namespace Bizland.Infrastructure.Dapper.DapperCRUD
         {
             IsReadOnly = isReadOnly;
         }
+
         /// <summary>
         /// Does this property persist to the database?
         /// </summary>

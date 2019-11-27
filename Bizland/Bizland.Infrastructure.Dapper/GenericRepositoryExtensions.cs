@@ -1,10 +1,9 @@
 ﻿using Bizland.Domain.Core;
 using Bizland.Infrastructure.Dapper.DapperCRUD;
 using Bizland.Infrastructure.Interfaces;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bizland.Infrastructure.Dapper
