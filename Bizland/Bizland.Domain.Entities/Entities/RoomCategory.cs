@@ -9,13 +9,7 @@ namespace Bizland.Domain.Entities
     public class RoomCategory : DomainEntity<int>,
        IHasSeoMetaData, ISwitchable, ISortable, IDateTracking
     {
-        public RoomCategory()
-        {
-        }
-
-        public RoomCategory(string name, string description, int? parentId, int? homeOrder,
-            string image, bool? homeFlag, int sortOrder, Status status, string seoPageTitle, string seoAlias,
-            string seoKeywords, string seoDescription)
+        public RoomCategory(string name, string description, int? parentId, int? homeOrder, string image, bool? homeFlag, DateTime dateCreated, DateTime dateModified, int sortOrder, Status status, string seoPageTitle, string seoAlias, string seoKeywords, string seoDescription)
         {
             Name = name;
             Description = description;
@@ -23,6 +17,8 @@ namespace Bizland.Domain.Entities
             HomeOrder = homeOrder;
             Image = image;
             HomeFlag = homeFlag;
+            DateCreated = dateCreated;
+            DateModified = dateModified;
             SortOrder = sortOrder;
             Status = status;
             SeoPageTitle = seoPageTitle;

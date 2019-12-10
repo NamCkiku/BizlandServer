@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Scrutor" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Bizland.Application.Services\Bizland.Application.Services.csproj" />
     <ProjectReference Include="..\Bizland.Infrastructure.Dapper\Bizland.Infrastructure.Dapper.csproj" />
     <ProjectReference Include="..\Bizland.Infrastructure.EF\Bizland.Infrastructure.EF.csproj" />
