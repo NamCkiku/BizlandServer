@@ -1,8 +1,15 @@
-﻿using Bizland.Application.Services.Interfaces;
+﻿using Bizland.Application.Services;
+using Bizland.Application.Services.Interfaces;
 using Bizland.Application.Services.Services;
+using Bizland.Domain.Entities;
+using Bizland.Infrastructure.Configurations;
+using Bizland.Infrastructure.CrossCutting.Bus;
 using Bizland.Infrastructure.Dapper;
 using Bizland.Infrastructure.DBContext;
 using Bizland.Infrastructure.EF;
+using Bizland.Infrastructure.Extensions;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,19 +17,29 @@ using System.Text;
 
 namespace Bizland.Infrastructure.CrossCutting.IoC
 {
-    public class NativeInjectorBootStrapper
+    public static class NativeInjectorBootStrapper
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<AppDbContext>();
-            services.AddScoped<IEfUnitOfWork<AppDbContext>, EfUnitOfWork<AppDbContext>>();
-            services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
-            services.AddScoped<IDapperUnitOfWork, DapperUnitOfWork>();
+            //var resolver = services.BuildServiceProvider();
+            //using (var scope = resolver.CreateScope())
+            //{
+            //    services.AddEfCoreSqlServer<RoomDataContext>();
+            //    services.AddScoped<ProductDataContext>();
+            //}
+            services.AddServices();
+            services.AddDapperCoreSqlServer();
+            services.AddServiceByIntefaceInAssembly<Room>(typeof(IValidator<>));
+            services.AddLogingBehavior();
+            services.AddDomainEventBus();
 
-            //services.AddMediatR(Assembly.GetEntryAssembly(), typeof(Startup).Assembly);
+            return services;
+        }
 
-
-            services.AddScoped<IRoomService, RoomService>();
+        public static IServiceCollection AddLogingBehavior(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogingBehavior<,>));
+            return services;
         }
     }
 }

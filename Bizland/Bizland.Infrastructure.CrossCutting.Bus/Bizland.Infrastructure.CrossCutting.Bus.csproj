@@ -4,4 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.11.2" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bizland.Domain.Core\Bizland.Domain.Core.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure\Bizland.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

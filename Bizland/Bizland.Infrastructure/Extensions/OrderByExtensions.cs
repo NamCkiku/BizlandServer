@@ -8,10 +8,14 @@ namespace Bizland.Infrastructure.Extensions
 {
     public static class OrderByExtensions
     {
-        public static IQueryable<TEntity> OrderByPropertyName<TEntity, TKey>(
-            this IQueryable<TEntity> source,
-            string propertyName,
-            bool isDescending) where TEntity : DomainEntity<TKey>
+        public static IQueryable<TEntity> OrderByPropertyName<TEntity>(this IQueryable<TEntity> source,
+            string propertyName, bool isDescending) where TEntity : IEntityWithId<Guid>
+        {
+            return OrderByPropertyName(source, propertyName, isDescending);
+        }
+
+        public static IQueryable<TEntity> OrderByPropertyName<TEntity, TId>(this IQueryable<TEntity> source,
+            string propertyName, bool isDescending) where TEntity : IEntityWithId<TId>
         {
             if (source == null)
                 throw new ArgumentException("source");

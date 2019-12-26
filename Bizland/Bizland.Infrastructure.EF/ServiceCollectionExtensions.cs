@@ -1,5 +1,5 @@
-﻿using Bizland.Infrastructure.Dapper;
-using Bizland.Infrastructure.EF;
+﻿using Bizland.Infrastructure.DBContext;
+using Bizland.Infrastructure.Extensions;
 using Bizland.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,52 +8,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bizland.Infrastructure.CrossCutting.IoC
+namespace Bizland.Infrastructure.EF
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddServiceByIntefaceInAssembly<TRegisteredAssemblyType>(this IServiceCollection services, Type interfaceType)
-        {
-            services.Scan(s =>
-                s.FromAssemblyOf<TRegisteredAssemblyType>()
-                    .AddClasses(c => c.AssignableTo(interfaceType))
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime());
-
-            return services;
-        }
-
-        public static IServiceCollection AddServiceByIntefaceInCurrentDomain(this IServiceCollection services, Type interfaceType)
-        {
-            services.Scan(s =>
-                s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
-                    .AddClasses(c => c.AssignableTo(interfaceType))
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime());
-
-            return services;
-        }
-
         private const string SectionName = "Infrastructures:SqlServer";
         public static IServiceCollection AddEfCoreSqlServer<TDbContext>(this IServiceCollection services) where TDbContext : DbContext
         {
-            //services.AddServiceByIntefaceInCurrentDomain(typeof(IRepositoryAsync<>));
-            //services.AddServiceByIntefaceInCurrentDomain(typeof(IQueryRepository<>));
-            services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
-            services.AddScoped<IDapperUnitOfWork, DapperUnitOfWork>();
+            services.AddServiceByIntefaceInCurrentDomain(typeof(IRepositoryAsync<>));
+            services.AddServiceByIntefaceInCurrentDomain(typeof(IQueryRepository<>));
+
             var svcProvider = services.BuildServiceProvider();
             var config = svcProvider.GetRequiredService<IConfiguration>();
 
-            var options = new DapperDbOptions();
+            var options = new DbOptions();
             config.Bind(SectionName, options);
             services.AddSingleton(options);
-
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             if (options.Enabled)
             {
-                services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
+
                 services.AddDbContext<TDbContext>((sp, o) =>
                 {
-                    string connectionString = options.Database;
+                    string connectionString = options.ConnString;
                     o.UseSqlServer(connectionString,
                             sqlOptions =>
                             {
@@ -67,8 +44,6 @@ namespace Bizland.Infrastructure.CrossCutting.IoC
             }
             else
             {
-                //services.AddScoped<IUnitOfWork, typeof(EfUnitOfWork <>)> ();
-
                 services.AddDbContext<TDbContext>((sp, o) =>
                 {
                     o.UseInMemoryDatabase("DefaultMainDb");

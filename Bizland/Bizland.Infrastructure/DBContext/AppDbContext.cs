@@ -1,6 +1,5 @@
 ﻿using Bizland.Domain.Core;
 using Bizland.Domain.Entities;
-using Bizland.Domain.Entities.Entities;
 using Bizland.Infrastructure.Configurations;
 using Bizland.Infrastructure.Extensions;
 using Bizland.Infrastructure.Helper;
@@ -14,43 +13,34 @@ using Microsoft.Extensions.Configuration;
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bizland.Infrastructure.DBContext
 {
-    public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public abstract class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions options) : base(options)
+        private readonly IDomainEventDispatcher _eventBus = null;
+        public AppDbContext(DbContextOptions options, IDomainEventDispatcher eventBus = null) : base(options)
         {
+            _eventBus = eventBus ?? new MemoryDomainEventDispatcher();
         }
 
-        public DbSet<Room> Rooms { set; get; }
-
-        public DbSet<RoomCategory> RoomCategories { set; get; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            #region Identity Config
-
-            builder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims").HasKey(x => x.Id);
-
-            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims")
-                .HasKey(x => x.Id);
-
-            builder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
-
-            builder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles")
-                .HasKey(x => new { x.RoleId, x.UserId });
-
-            builder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens")
-               .HasKey(x => new { x.UserId });
-
-            #endregion Identity Config
-
-            builder.AddConfiguration(new RoomConfiguration());
-            builder.AddConfiguration(new RoomCategoryConfiguration());
+            var result = base.SaveChangesAsync(cancellationToken);
+            SaveChangesWithEvents(_eventBus);
+            return result;
         }
 
         public override int SaveChanges()
+        {
+            var result = base.SaveChanges();
+            SaveChangesWithEvents(_eventBus);
+            return result;
+        }
+
+        private void SaveChangesWithEvents(IDomainEventDispatcher domainEventDispatcher)
         {
             System.Collections.Generic.IEnumerable<EntityEntry> modified = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
 
@@ -65,18 +55,40 @@ namespace Bizland.Infrastructure.DBContext
                     changedOrAddedItem.DateModified = DateTime.Now;
                 }
             }
-            return base.SaveChanges();
-        }
-    }
+            var entities = ChangeTracker.Entries().Select(e => e.Entity);
 
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
-    {
-        public AppDbContext CreateDbContext(string[] args)
-        {
-            var connString = ConfigurationHelper.GetConfiguration(AppContext.BaseDirectory)?.GetConnectionString("DefaultConnection");
-            DbContextOptionsBuilder<AppDbContext> builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer(connString);
-            return new AppDbContext(builder.Options);
+            entities
+                .Where(e =>
+                    !e.GetType().BaseType.IsGenericType &&
+                    typeof(AggregateRootBase).IsAssignableFrom(e.GetType()))
+                .Select(aggregateRoot =>
+                {
+                    var events = ((IAggregateRoot)aggregateRoot).GetUncommittedEvents();
+
+                    foreach (var domainEvent in events)
+                        domainEventDispatcher.Dispatch(domainEvent);
+
+                    ((IAggregateRoot)aggregateRoot).GetUncommittedEvents().Clear();
+                    return aggregateRoot;
+                })
+                .ToArray();
+
+            entities
+                .Where(e =>
+                    e.GetType().BaseType.IsGenericType &&
+                    typeof(AggregateRootWithIdBase<>).IsAssignableFrom(e.GetType().BaseType.GetGenericTypeDefinition()))
+                .Select(aggregateRoot =>
+                {
+                    //todo: need a better code to avoid dynamic
+                    var events = ((dynamic)aggregateRoot).GetUncommittedEvents();
+
+                    foreach (var domainEvent in events)
+                        domainEventDispatcher.Dispatch(domainEvent);
+
+                    ((dynamic)aggregateRoot).GetUncommittedEvents().Clear();
+                    return aggregateRoot;
+                })
+                .ToArray();
         }
     }
 }

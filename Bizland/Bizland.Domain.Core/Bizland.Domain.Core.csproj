@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bizland.Common\Bizland.Common.csproj" />
     <ProjectReference Include="..\Bizland.Utilities\Bizland.Utilities.csproj" />
   </ItemGroup>
 

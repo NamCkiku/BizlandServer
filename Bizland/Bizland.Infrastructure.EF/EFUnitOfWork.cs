@@ -2,43 +2,47 @@
 using Bizland.Infrastructure.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
-
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bizland.Infrastructure.EF
 {
-    public interface IEfUnitOfWork : IUnitOfWork { }
-
-    public interface IEfUnitOfWork<TDbContext> : IUnitOfWork where TDbContext : DbContext { }
-
-    public class EfUnitOfWork<TDbContext> : IEfUnitOfWork<TDbContext> where TDbContext : DbContext
+    public class EFUnitOfWork : IUnitOfWork
     {
-        private readonly TDbContext _context;
-        private ConcurrentDictionary<string, object> _repositories;
+        private ConcurrentDictionary<string, object> _repositories = null;
+        private readonly IEnumerable<IDomainEventDispatcher> _eventBuses;
 
-        public EfUnitOfWork(TDbContext context)
+        private readonly DbContext _dbContext;
+
+        public EFUnitOfWork(DbContext dbContext, IEnumerable<IDomainEventDispatcher> eventBuses)
         {
-            _context = context;
+            _dbContext = dbContext;
+            _eventBuses = eventBuses;
         }
 
-        public virtual int Commit()
+        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IAggregateRoot
         {
-            return _context.SaveChanges();
-        }
+            if (_repositories == null)
+                _repositories = new ConcurrentDictionary<string, object>();
 
-        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            return _context.SaveChangesAsync(cancellationToken);
+            var key = $"{typeof(TEntity)}-command";
+            if (!_repositories.ContainsKey(key))
+            {
+                var repository = new RepositoryAsync<TEntity>(_dbContext, _eventBuses);
+                _repositories[key] = repository;
+            }
+
+            return (IRepositoryAsync<TEntity>)_repositories[key];
         }
 
         public void Dispose()
         {
-            _context?.Dispose();
         }
 
-        public IQueryRepository<TEntity, TKey> QueryRepository<TEntity, TKey>() where TEntity : DomainEntity<TKey>
+        public IQueryRepository<TEntity> QueryRepository<TEntity>() where TEntity : class, IAggregateRoot
         {
             if (_repositories == null)
                 _repositories = new ConcurrentDictionary<string, object>();
@@ -46,22 +50,16 @@ namespace Bizland.Infrastructure.EF
             var key = $"{typeof(TEntity)}-query";
             if (!_repositories.ContainsKey(key))
             {
-                var cachedRepo = new QueryRepository<TEntity, TKey>(_context);
-                _repositories[key] = cachedRepo;
+                var repository = new RepositoryAsync<TEntity>(_dbContext, _eventBuses);
+                _repositories[key] = repository;
             }
 
-            return (IQueryRepository<TEntity, TKey>)_repositories[key];
+            return (IQueryRepository<TEntity>)_repositories[key];
         }
 
-        public IRepositoryAsync<TEntity, TKey> RepositoryAsync<TEntity, TKey>() where TEntity : DomainEntity<TKey>
+        public IRepositoryWithIdAsync<TEntity, TId> RepositoryAsync<TEntity, TId>() where TEntity : class, IAggregateRootWithId<TId>
         {
-            if (_repositories == null) _repositories = new ConcurrentDictionary<string, object>();
-
-            var key = $"{typeof(TEntity)}-command";
-            if (!_repositories.ContainsKey(key))
-                _repositories[key] = new RepositoryAsync<DbContext, TEntity, TKey>(_context);
-
-            return (IRepositoryAsync<TEntity, TKey>)_repositories[key];
+            throw new NotImplementedException();
         }
     }
 }

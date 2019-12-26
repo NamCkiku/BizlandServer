@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Bizland.Application.Services.Interfaces;
 using Bizland.Application.Services.ViewModels;
-using Bizland.Domain.Entities.Entities;
+using Bizland.Domain.Entities;
 using Bizland.Infrastructure.Dapper;
+using Bizland.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace Bizland.Application.Services.Services
     public class RoomService : IRoomService
     {
         private readonly IMapper _mapper;
-        private readonly IDapperUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoomService(IMapper mapper, IDapperUnitOfWork unitOfWork)
+        public RoomService(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -29,7 +30,7 @@ namespace Bizland.Application.Services.Services
 
         public IEnumerable<RoomViewModel> GetAll()
         {
-            var roomRepository = _unitOfWork.QueryRepository<Room, Guid>();
+            var roomRepository = _unitOfWork.QueryRepository<Room>();
 
             var lstRoom = roomRepository.Queryable().ToList();
 
@@ -43,11 +44,11 @@ namespace Bizland.Application.Services.Services
 
         public async Task<RoomViewModel> GetByIdAsyn(Guid id)
         {
-            var roomRepository = _unitOfWork.QueryRepository<Room, Guid>();
+            var roomRepository = _unitOfWork.QueryRepository<Room>();
 
-            var lstRoom = await roomRepository.GetByIdAsync(id);
+            var lstRoom = roomRepository.Queryable().Where(x => x.Id == id).FirstOrDefault();
 
-            return _mapper.Map<Room, RoomViewModel>(lstRoom);
+            return await Task.FromResult(_mapper.Map<Room, RoomViewModel>(lstRoom));
         }
 
         public async Task<RoomViewModel> InsertRoomAsyn(RoomViewModel customerViewModel)

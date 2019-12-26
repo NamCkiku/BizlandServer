@@ -1,16 +1,56 @@
-﻿using MediatR;
+﻿using Bizland.Utilities.Helpers;
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bizland.Domain.Core
 {
-    public abstract class Event : Message, INotification
+    /// <summary>
+    ///     Supertype for all Event types
+    /// </summary>
+    public interface IEvent
     {
-        public DateTime Timestamp { get; private set; }
+        int EventVersion { get; }
+        DateTime OccurredOn { get; }
+    }
 
-        protected Event()
+    public interface IEventHandler<in TEvent, TResult>
+        where TEvent : IEvent
+    {
+        Task<TResult> Handle(TEvent request, CancellationToken cancellationToken);
+    }
+
+    public interface IDomainEventDispatcher : IDisposable
+    {
+        Task Dispatch(IEvent @event);
+    }
+
+    public abstract class EventBase : IEvent
+    {
+        public int EventVersion { get; protected set; } = 1;
+        public DateTime OccurredOn { get; protected set; } = DateTimeHelper.GenerateDateTime();
+    }
+
+    public class EventEnvelope : EventBase
+    {
+        public EventEnvelope(IEvent @event)
         {
-            Timestamp = DateTime.Now;
+            Event = @event;
+        }
+
+        public IEvent Event { get; }
+    }
+
+    public class MemoryDomainEventDispatcher : IDomainEventDispatcher
+    {
+        public void Dispose()
+        {
+        }
+
+        public Task Dispatch(IEvent @event)
+        {
+            return Task.CompletedTask;
         }
     }
 }

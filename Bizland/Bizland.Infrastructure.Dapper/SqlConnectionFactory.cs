@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Bizland.Infrastructure.DBContext;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
 using System;
@@ -8,10 +9,10 @@ namespace Bizland.Infrastructure.Dapper
 {
     public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
     {
-        private readonly IOptions<DapperDbOptions> _dapperOptions;
+        private readonly DbOptions _dapperOptions;
         private IDbConnection _connection;
 
-        public SqlConnectionFactory(IOptions<DapperDbOptions> dapperOptions)
+        public SqlConnectionFactory(DbOptions dapperOptions)
         {
             _dapperOptions = dapperOptions;
         }
@@ -20,7 +21,7 @@ namespace Bizland.Infrastructure.Dapper
         {
             if (_connection == null || _connection.State != ConnectionState.Open)
             {
-                _connection = new SqlConnection(_dapperOptions.Value?.Database);
+                _connection = new SqlConnection(_dapperOptions.ConnString);
                 _connection.Open();
             }
 

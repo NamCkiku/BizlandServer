@@ -9,89 +9,80 @@ using System.Threading.Tasks;
 
 namespace Bizland.Infrastructure.Dapper
 {
-    public class GenericRepository<TEntity, TKey> : IRepositoryAsync<TEntity, TKey>, IQueryRepository<TEntity, TKey>
-       where TEntity : DomainEntity<TKey>
+    public class GenericRepository<TEntity> : IQueryRepository<TEntity>, IRepositoryAsync<TEntity> where TEntity : class, IAggregateRoot
     {
-        public ISqlConnectionFactory SqlConnectionFactory { get; }
+        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        private readonly IEnumerable<IDomainEventDispatcher> _eventBuses;
 
-        public GenericRepository(ISqlConnectionFactory sqlConnectionFactory)
+        public GenericRepository(ISqlConnectionFactory sqlConnectionFactory, IEnumerable<IDomainEventDispatcher> eventBuses)
         {
-            SqlConnectionFactory = sqlConnectionFactory;
+            _sqlConnectionFactory = sqlConnectionFactory;
+            _eventBuses = eventBuses;
         }
 
         public IQueryable<TEntity> Queryable()
         {
-            using var conn = SqlConnectionFactory.GetOpenConnection();
+            using var conn = _sqlConnectionFactory.GetOpenConnection();
             var entities = conn.GetList<TEntity>();
             return entities.AsQueryable();
         }
 
-        public async Task<TEntity> GetByIdAsync(TKey id)
+        private async Task<TEntity> GetByIdAsync(Guid id)
         {
-            using var conn = SqlConnectionFactory.GetOpenConnection();
+            using var conn = _sqlConnectionFactory.GetOpenConnection();
             var entities = await conn.GetListAsync<TEntity>(new { id });
             return entities.FirstOrDefault();
         }
 
         public async Task<IReadOnlyCollection<TEntity>> GetByConditionAsync(object whereConditions)
         {
-            using var conn = SqlConnectionFactory.GetOpenConnection();
+            using var conn = _sqlConnectionFactory.GetOpenConnection();
             var entities = await conn.GetListAsync<TEntity>(whereConditions);
             return entities.ToList();
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
-            using var conn = SqlConnectionFactory.GetOpenConnection();
-            var newId = await conn.InsertAsync<TKey, TEntity>(entity);
-            //if (entity is IAggregateRoot<TId> returnValue)
-            //{
-            //    returnValue.AsDynamic().Id = newId;
-            //    return (TEntity)returnValue;
-            //}
+            using var conn = _sqlConnectionFactory.GetOpenConnection();
+            var newId = await conn.InsertAsync<Guid, TEntity>(entity);
 
-            //await DispatchEvents(entity);
+            DispatchUncommittedEvents(entity);
+
             return entity;
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            using var conn = SqlConnectionFactory.GetOpenConnection();
+            using var conn = _sqlConnectionFactory.GetOpenConnection();
             var numberRecordAffected = await conn.UpdateAsync(entity);
             if (numberRecordAffected <= 0)
             {
                 throw new Exception("Could not update record to the database.");
             }
 
-            //await DispatchEvents(entity);
+            DispatchUncommittedEvents(entity);
+
             return await GetByIdAsync(entity.Id);
         }
 
-        public async Task<int> DeleteAsync(TEntity entity)
+        public async Task<TEntity> DeleteAsync(TEntity entity)
         {
-            using var conn = SqlConnectionFactory.GetOpenConnection();
-            var numberRecordAffected = await conn.DeleteAsync(entity);
+            using var conn = _sqlConnectionFactory.GetOpenConnection();
+            await conn.DeleteAsync(entity);
 
-            if (numberRecordAffected <= 0)
-            {
-                throw new Exception("Could not delete record in the database.");
-            }
+            DispatchUncommittedEvents(entity);
 
-            //await DispatchEvents(entity);
-            return numberRecordAffected;
+            return entity;
         }
 
-        //private async Task DispatchEvents(TEntity entity)
-        //{
-        //    foreach (var @event in entity.GetUncommittedEvents())
-        //    {
-        //        foreach (var eventBus in EventBuses)
-        //        {
-        //            await eventBus.Dispatch(@event);
-        //        }
-        //    }
+        private void DispatchUncommittedEvents(TEntity entity)
+        {
+            foreach (var @event in entity.GetUncommittedEvents())
+            {
+                _eventBuses.Select(b => b.Dispatch(@event)).ToList();
+            }
 
-        //    entity.ClearUncommittedEvents();
-        //}
+            entity.ClearUncommittedEvents();
+        }
     }
 }

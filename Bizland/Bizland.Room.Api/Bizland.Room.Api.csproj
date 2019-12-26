@@ -5,6 +5,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bizland.Application.Services\Bizland.Application.Services.csproj" />
+    <ProjectReference Include="..\Bizland.Common\Bizland.Common.csproj" />
+    <ProjectReference Include="..\Bizland.Domain.Core\Bizland.Domain.Core.csproj" />
+    <ProjectReference Include="..\Bizland.Domain.Entities\Bizland.Domain.Entities.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure.CrossCutting.Bus\Bizland.Infrastructure.CrossCutting.Bus.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure.CrossCutting.IoC\Bizland.Infrastructure.CrossCutting.IoC.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure.Dapper\Bizland.Infrastructure.Dapper.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure.EF\Bizland.Infrastructure.EF.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure.Repository\Bizland.Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure\Bizland.Infrastructure.csproj" />
+    <ProjectReference Include="..\Bizland.Utilities\Bizland.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
+    <PackageReference Include="GlobalExceptionHandler" Version="4.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
   </ItemGroup>
 
 </Project>

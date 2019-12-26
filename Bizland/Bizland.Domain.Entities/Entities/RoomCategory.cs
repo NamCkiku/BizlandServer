@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Bizland.Domain.Entities
 {
     [Table("RoomCategories")]
-    public class RoomCategory : DomainEntity<int>,
+    public class RoomCategory : AggregateRootWithIdBase<int>,
        IHasSeoMetaData, ISwitchable, ISortable, IDateTracking
     {
         public RoomCategory(string name, string description, int? parentId, int? homeOrder, string image, bool? homeFlag, DateTime dateCreated, DateTime dateModified, int sortOrder, Status status, string seoPageTitle, string seoAlias, string seoKeywords, string seoDescription)
