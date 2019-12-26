@@ -8,7 +8,7 @@ namespace Bizland.Application.Services.Interfaces
 {
     public interface IRoomService : IDisposable
     {
-        Task<RoomViewModel> InsertRoomAsyn(RoomViewModel customerViewModel);
+        void InsertRoomAsyn(RoomViewModel roomViewModel);
         IEnumerable<RoomViewModel> GetAll();
         Task<RoomViewModel> GetByIdAsyn(Guid id);
         void Update(RoomViewModel customerViewModel);
