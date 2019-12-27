@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Bizland.Application.Services.Interfaces;
 using Bizland.Application.Services.ViewModels;
-using Bizland.Domain.Core.Bus;
 using Bizland.Domain.Entities;
 using Bizland.Domain.Entities.Commands;
 using Bizland.Infrastructure.Dapper;
 using Bizland.Infrastructure.Interfaces;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +18,13 @@ namespace Bizland.Application.Services.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMediatorHandler _bus;
+        private readonly IMediator _mediator;
 
-        public RoomService(IMapper mapper, IUnitOfWork unitOfWork, IMediatorHandler bus)
+        public RoomService(IMapper mapper, IUnitOfWork unitOfWork, IMediator mediator)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _bus = bus;
+            _mediator = mediator;
         }
 
         public void Dispose()
@@ -55,10 +55,12 @@ namespace Bizland.Application.Services.Services
             return await Task.FromResult(_mapper.Map<Room, RoomViewModel>(lstRoom));
         }
 
-        public void InsertRoomAsyn(RoomViewModel roomViewModel)
+        public async Task<bool> InsertRoomAsyn(RoomViewModel roomViewModel)
         {
             var registerCommand = _mapper.Map<AddNewRoomCommand>(roomViewModel);
-            _bus.SendCommand(registerCommand);
+
+            return await _mediator.Send(registerCommand);
+
         }
 
         public void Remove(Guid id)
