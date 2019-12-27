@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bizland.Domain.Entities.Commands
+namespace Bizland.Application.Service.Room.Commands
 {
     public abstract class RoomCommand : Command
     {

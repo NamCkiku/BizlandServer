@@ -1,10 +1,10 @@
-﻿using Bizland.Domain.Core;
-using Bizland.Domain.Entities.Validations;
+﻿using Bizland.Application.Service.Room.Validations;
+using Bizland.Domain.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bizland.Domain.Entities.Commands
+namespace Bizland.Application.Service.Room.Commands
 {
     public class AddNewRoomCommand : RoomCommand
     {

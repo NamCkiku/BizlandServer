@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Bizland.Application.Service.Room.Commands;
 using Bizland.Application.Service.Room.ViewModels;
-using Bizland.Domain.Entities.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;

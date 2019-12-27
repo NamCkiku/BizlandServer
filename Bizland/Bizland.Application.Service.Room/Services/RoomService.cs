@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Bizland.Application.Service.Room.Commands;
 using Bizland.Application.Service.Room.Interfaces;
 using Bizland.Application.Service.Room.ViewModels;
 using Bizland.Domain.Entities;
-using Bizland.Domain.Entities.Commands;
 using Bizland.Infrastructure.Dapper;
 using Bizland.Infrastructure.Interfaces;
 using MediatR;

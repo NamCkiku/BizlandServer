@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Bizland.Application.Service.Room.Commands;
 using Bizland.Domain.Entities;
-using Bizland.Domain.Entities.Commands;
 using Bizland.Infrastructure.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;

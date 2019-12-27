@@ -1,10 +1,10 @@
-﻿using Bizland.Domain.Entities.Commands;
+﻿using Bizland.Application.Service.Room.Commands;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bizland.Domain.Entities.Validations
+namespace Bizland.Application.Service.Room.Validations
 {
     public abstract class RoomValidation<T> : AbstractValidator<T> where T : RoomCommand
     {
