@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Bizland.Application.Services.CommandHandlers
+namespace Bizland.Application.Service.Room.CommandHandlers
 {
     public class RoomCommandHandler : IRequestHandler<AddNewRoomCommand, bool>
     {
@@ -28,8 +28,8 @@ namespace Bizland.Application.Services.CommandHandlers
         public async Task<bool> Handle(AddNewRoomCommand request, CancellationToken cancellationToken)
         {
             var response = false;
-            var repo = _uow.RepositoryAsync<Room>();
-            var room = _mapper.Map<Room>(request);
+            var repo = _uow.RepositoryAsync<Bizland.Domain.Entities.Room>();
+            var room = _mapper.Map<Bizland.Domain.Entities.Room>(request);
             var entity = await repo.AddAsync(room);
             if (entity != null)
             {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bizland.Application.Services.AutoMapper
+namespace Bizland.Application.Service.Room.AutoMapper
 {
     public static class AutoMapperSetup
     {

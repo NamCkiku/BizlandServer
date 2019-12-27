@@ -1,10 +1,10 @@
-﻿using Bizland.Application.Services.ViewModels;
+﻿using Bizland.Application.Service.Room.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bizland.Application.Services.Interfaces
+namespace Bizland.Application.Service.Room.Interfaces
 {
     public interface IRoomService : IDisposable
     {

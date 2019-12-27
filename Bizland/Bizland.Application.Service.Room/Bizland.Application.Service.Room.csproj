@@ -5,13 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bizland.Domain.Core\Bizland.Domain.Core.csproj" />
+    <ProjectReference Include="..\Bizland.Domain.Entities\Bizland.Domain.Entities.csproj" />
     <ProjectReference Include="..\Bizland.Infrastructure.Dapper\Bizland.Infrastructure.Dapper.csproj" />
+    <ProjectReference Include="..\Bizland.Infrastructure.EF\Bizland.Infrastructure.EF.csproj" />
   </ItemGroup>
 
 </Project>

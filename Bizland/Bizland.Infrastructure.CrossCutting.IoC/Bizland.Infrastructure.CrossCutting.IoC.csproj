@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bizland.Application.Services\Bizland.Application.Services.csproj" />
+    <ProjectReference Include="..\Bizland.Application.Service.Room\Bizland.Application.Service.Room.csproj" />
     <ProjectReference Include="..\Bizland.Infrastructure.CrossCutting.Bus\Bizland.Infrastructure.CrossCutting.Bus.csproj" />
     <ProjectReference Include="..\Bizland.Infrastructure.Dapper\Bizland.Infrastructure.Dapper.csproj" />
     <ProjectReference Include="..\Bizland.Infrastructure.EF\Bizland.Infrastructure.EF.csproj" />

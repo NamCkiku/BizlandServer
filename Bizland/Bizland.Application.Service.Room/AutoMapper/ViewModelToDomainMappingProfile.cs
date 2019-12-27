@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Bizland.Application.Services.ViewModels;
-using Bizland.Domain.Entities;
+using Bizland.Application.Service.Room.ViewModels;
 using Bizland.Domain.Entities.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bizland.Application.Services.AutoMapper
+namespace Bizland.Application.Service.Room.AutoMapper
 {
     public class ViewModelToDomainMappingProfile : Profile
     {
@@ -17,8 +16,8 @@ namespace Bizland.Application.Services.AutoMapper
                 c.ThumbnailImage, c.MoreImages, c.Acreage, c.Price, c.Phone, c.Address, c.UserID, c.Description, c.Content, c.Lat, c.Lng, c.ViewCount, c.RoomStar, c.CreatedBy, c.UpdatedBy, c.IsDeleted, c.Status,
                 c.DateCreated, c.DateModified, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription, c.SortOrder, c.Tags));
 
-            CreateMap<AddNewRoomCommand, Room>()
-               .ConstructUsing(c => new Room(c.RoomName, c.Alias, c.RoomCategoryID, c.WardID, c.DistrictID, c.ProvinceID, c.VipID, c.MoreInfomationID, c.PaymentID,
+            CreateMap<AddNewRoomCommand, Bizland.Domain.Entities.Room>()
+               .ConstructUsing(c => new Bizland.Domain.Entities.Room(c.RoomName, c.Alias, c.RoomCategoryID, c.WardID, c.DistrictID, c.ProvinceID, c.VipID, c.MoreInfomationID, c.PaymentID,
                c.ThumbnailImage, c.MoreImages, c.Acreage, c.Price, c.Phone, c.Address, c.UserID, c.Description, c.Content, c.Lat, c.Lng, c.ViewCount, c.RoomStar, c.CreatedBy, c.UpdatedBy, c.IsDeleted, c.Status,
                c.DateCreated, c.DateModified, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription, c.SortOrder, c.Tags));
             //CreateMap<CustomerViewModel, UpdateCustomerCommand>()

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Bizland.Application.Services.Interfaces;
-using Bizland.Application.Services.ViewModels;
+using Bizland.Application.Service.Room.Interfaces;
+using Bizland.Application.Service.Room.ViewModels;
 using Bizland.Domain.Entities;
 using Bizland.Domain.Entities.Commands;
 using Bizland.Infrastructure.Dapper;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bizland.Application.Services.Services
+namespace Bizland.Application.Service.Room.Services
 {
     public class RoomService : IRoomService
     {
@@ -34,11 +34,11 @@ namespace Bizland.Application.Services.Services
 
         public IEnumerable<RoomViewModel> GetAll()
         {
-            var roomRepository = _unitOfWork.QueryRepository<Room>();
+            var roomRepository = _unitOfWork.QueryRepository<Bizland.Domain.Entities.Room>();
 
             var lstRoom = roomRepository.Queryable().ToList();
 
-            return _mapper.Map<List<Room>, List<RoomViewModel>>(lstRoom);
+            return _mapper.Map<List<Bizland.Domain.Entities.Room>, List<RoomViewModel>>(lstRoom);
         }
 
         public IList<RoomViewModel> GetAllHistory(Guid id)
@@ -48,11 +48,11 @@ namespace Bizland.Application.Services.Services
 
         public async Task<RoomViewModel> GetByIdAsyn(Guid id)
         {
-            var roomRepository = _unitOfWork.QueryRepository<Room>();
+            var roomRepository = _unitOfWork.QueryRepository<Bizland.Domain.Entities.Room>();
 
             var lstRoom = roomRepository.Queryable().Where(x => x.Id == id).FirstOrDefault();
 
-            return await Task.FromResult(_mapper.Map<Room, RoomViewModel>(lstRoom));
+            return await Task.FromResult(_mapper.Map<Bizland.Domain.Entities.Room, RoomViewModel>(lstRoom));
         }
 
         public async Task<bool> InsertRoomAsyn(RoomViewModel roomViewModel)

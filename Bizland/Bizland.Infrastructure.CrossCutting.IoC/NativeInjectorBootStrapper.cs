@@ -1,6 +1,4 @@
-﻿using Bizland.Application.Services;
-using Bizland.Application.Services.Interfaces;
-using Bizland.Application.Services.Services;
+﻿using Bizland.Application.Service.Room;
 using Bizland.Domain.Entities;
 using Bizland.Infrastructure.Configurations;
 using Bizland.Infrastructure.CrossCutting.Bus;
@@ -27,7 +25,7 @@ namespace Bizland.Infrastructure.CrossCutting.IoC
             //    services.AddEfCoreSqlServer<RoomDataContext>();
             //    services.AddScoped<ProductDataContext>();
             //}
-            services.AddServices();
+            services.AddServicesRoom();
             services.AddDapperCoreSqlServer();
             services.AddServiceByIntefaceInAssembly<Room>(typeof(IValidator<>));
             services.AddLogingBehavior();

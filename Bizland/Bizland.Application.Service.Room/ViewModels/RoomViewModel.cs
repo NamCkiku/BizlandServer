@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Bizland.Application.Services.ViewModels
+namespace Bizland.Application.Service.Room.ViewModels
 {
     public class RoomViewModel
     {
